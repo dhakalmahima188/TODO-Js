@@ -1,4 +1,9 @@
-var bodyParser = require('body-parser')
+// Using Node.js `require()`
+const mongoose = require('mongoose');
+
+
+
+var bodyParser = require('body-parser');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -10,6 +15,10 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+mongoose.connect("mongodb://127.0.0.1:27017/todos", { useNewUrlParser: true, useUnifiedTopology: true })
+let conn = mongoose.connection
+conn.on("error", function(){console.log("Error connecting to mongo")})
+conn.on("connected", function(){console.log("Connected to mongo")})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
